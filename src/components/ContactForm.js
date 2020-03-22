@@ -7,6 +7,7 @@ const ContactForm = () => {
     mode: "onBlur"
   });
   const onSubmit = data => {
+    console.log(data);
     setData(data);
   };
 
@@ -17,6 +18,7 @@ const ContactForm = () => {
           <label htmlFor="firstName">First Name*</label>
           <input
             name="firstName"
+            id="firstName"
             placeholder="bill"
             ref={register({ required: true, maxLength: 3 })}
           />
