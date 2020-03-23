@@ -2,28 +2,57 @@ import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import App from "./App";
 import ContactForm from "./components/ContactForm";
+import "@testing-library/jest-dom/extend-expect";
 
 test("renders App without crashing", () => {
   render(<App />);
 });
 
-test("First Name input field", async () => {
+test("First Name input field to be in the document", () => {
   const { getByText } = render(<ContactForm />);
-  // const wrapper = rtl.render(<ContactForm />);
+
   const firstName = getByText(/first name\*/i);
+
   expect(firstName).toBeInTheDocument();
 });
 
-test("onSubmit when submit button is clicked", async () => {
-  const container = render(<ContactForm />);
+test("Last Name input field to be in the document", () => {
+  const { getByText } = render(<ContactForm />);
 
-  const inputNode = container.getByLabelText("First Name*", {
-    selector: "input"
-  });
+  const lastName = getByText(/last name\*/i);
 
-  console.log("input log: ", inputNode);
+  expect(lastName).toBeInTheDocument();
+});
 
-  // const button = container.getByText(/submit query/i);
-  // fireEvent.click(button);
-  // expect(respwonse).toHaveTextContent(``);
+test("Email input field to be in the document", () => {
+  const { getByText } = render(<ContactForm />);
+
+  const email = getByText(/email\*/i);
+
+  expect(email).toBeInTheDocument();
+});
+
+test("Message input field to be in the document", () => {
+  const { getByText } = render(<ContactForm />);
+
+  const message = getByText(/message/i);
+
+  expect(message).toBeInTheDocument();
+});
+
+test("Pre tag renders test data passed in to Contact Form", () => {
+  const testingData = {
+    firstName: "Sebastian",
+    lastName: "Garces",
+    email: "gsgarces1@gmail.com",
+    message: "This is a message"
+  };
+
+  const { getByTestId } = render(<ContactForm testingData={testingData} />);
+
+  const preTag = getByTestId("pretag");
+
+  expect(preTag).toHaveTextContent(
+    `{ "firstName": "Sebastian", "lastName": "Garces", "email": "gsgarces1@gmail.com", "message": "This is a message" }`
+  );
 });
