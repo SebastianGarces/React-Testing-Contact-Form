@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
-const ContactForm = () => {
-  const [data, setData] = useState();
+const ContactForm = ({ testingData }) => {
+  const [data, setData] = useState(testingData);
   const { register, errors, handleSubmit, reset } = useForm({
     mode: "onBlur"
   });
+
   const onSubmit = data => {
+    console.log(data);
     setData(data);
   };
 
@@ -17,6 +19,7 @@ const ContactForm = () => {
           <label htmlFor="firstName">First Name*</label>
           <input
             name="firstName"
+            id="firstName"
             placeholder="bill"
             ref={register({ required: true, maxLength: 3 })}
           />
@@ -51,7 +54,10 @@ const ContactForm = () => {
           <textarea name="message" ref={register({ required: false })} />
         </div>
         {data && (
-          <pre style={{ textAlign: "left", color: "white" }}>
+          <pre
+            data-testid="pretag"
+            style={{ textAlign: "left", color: "white" }}
+          >
             {JSON.stringify(data, null, 2)}
           </pre>
         )}
